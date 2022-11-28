@@ -106,6 +106,22 @@ public enum HTTPStatusCodes {
 		ClientError.tooEarly
 	]
 	
+	public static func statusCode(_ rawValue: Int) -> (any HTTPStatusCode)? {
+		if let statusCode = Information(rawValue: rawValue) {
+			return statusCode
+		} else if let statusCode = Success(rawValue: rawValue) {
+			return statusCode
+		} else if let statusCode = Redirection(rawValue: rawValue) {
+			return statusCode
+		} else if let statusCode = ClientError(rawValue: rawValue) {
+			return statusCode
+		} else if let statusCode = ServerError(rawValue: rawValue) {
+			return statusCode
+		} else {
+			return nil
+		}
+	}
+	
 }
 
 extension HTTPStatusCodes.Information: HTTPStatusCode {
