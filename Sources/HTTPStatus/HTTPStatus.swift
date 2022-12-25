@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol HTTPStatusCode: CaseIterable, RawRepresentable where RawValue == Int {
+public protocol HTTPStatusCode: Hashable, CaseIterable, RawRepresentable where RawValue == Int {
 	
 	var message: String { get }
 	
