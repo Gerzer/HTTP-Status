@@ -1,3 +1,5 @@
+import Foundation
+
 public protocol HTTPStatusCode: CaseIterable, RawRepresentable where RawValue == Int {
 	
 	var message: String { get }
@@ -201,7 +203,7 @@ extension HTTPStatusCodes.Redirection: HTTPStatusCode {
 	
 }
 
-extension HTTPStatusCodes.ClientError: Error, HTTPStatusCode {
+extension HTTPStatusCodes.ClientError: LocalizedError, HTTPStatusCode {
 	
 	public var message: String {
 		get {
@@ -274,9 +276,15 @@ extension HTTPStatusCodes.ClientError: Error, HTTPStatusCode {
 		}
 	}
 	
+	public var errorDescription: String? {
+		get {
+			return "An HTTP client error occurred: “\(self.message)”."
+		}
+	}
+	
 }
 
-extension HTTPStatusCodes.ServerError: Error, HTTPStatusCode {
+extension HTTPStatusCodes.ServerError: LocalizedError, HTTPStatusCode {
 	
 	public var message: String {
 		get {
@@ -310,6 +318,12 @@ extension HTTPStatusCodes.ServerError: Error, HTTPStatusCode {
 	public var localizedDescription: String {
 		get {
 			return "HTTP \(self.rawValue) \(self.message)"
+		}
+	}
+	
+	public var errorDescription: String? {
+		get {
+			return "An HTTP server error occurred: “\(self.message)”."
 		}
 	}
 	
